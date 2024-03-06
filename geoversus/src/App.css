@@ -6,6 +6,7 @@
     
   height: 100%;
   width: 100%;
+  position: absolute;
 
   background-color: rgb(237, 237, 237);
 }
@@ -27,4 +28,10 @@
   font-family: Helvetica;
   font-size: 24pt;
   font-weight: bold;
+}
+
+
+.street-view-style {
+  width: 200px;
+  height: 300px;
 }
