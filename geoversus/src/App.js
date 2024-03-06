@@ -1,6 +1,5 @@
-import React from 'react';
-import { useState } from "react";
-import { GoogleMap, useLoadScript, Marker, StreetViewPanorama, LoadScript } from '@react-google-maps/api';
+import React, { useState, useEffect } from 'react';
+import { GoogleMap, useLoadScript, Marker, StreetViewPanorama } from '@react-google-maps/api';
 import "./App.css";
 
 const libraries = ['places'];
@@ -91,24 +90,15 @@ const StreetView = (props) => {
 const LandingPage = () => {
 
   const [playerName, setPlayerName] = useState("");
-  const [gameDetails, setGameDetails] = useState({});
   const [result, setResult] = useState({});
-
-  const TitleBar = () => {
-      return (
-          <div className="title-bar">
-              <p className="title-text">GeoVersus</p>
-          </div>
-      );
-  }
-
-  function handlePlayerName(event) {
+  
+  const handlePlayerName = (event) => {
       event.preventDefault();
       const playerNameForm = event.target;
       setPlayerName(playerNameForm.playerNameInput.value);
   }
 
-  function Welcome() {
+  const Welcome = () => {
       return (
           <div id="welcome">
               <h1>Hi!</h1>
@@ -122,38 +112,54 @@ const LandingPage = () => {
               </form>
           </div>
       )
-  }
+  };
 
-  function submitGuess() {
+  const submitGuess = () => {
       setResult({
           guess: "Hawaii?",
           result: "WRONG AGAIN"
       });
-  }
+  };
 
-  function Game(props) {
+  const Game = (props) => {
+    const [counter, setCounter] = React.useState(60);
+
+    React.useEffect(() => {
+    const timer =
+      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+      if (counter === 0) {
+        setResult({
+          guess: "",
+          result: "TIME'S UP! YOU DIDN'T GUESS IN TIME."
+        });
+        clearInterval(timer); // Stop the timer
+      }
+    return () => clearInterval(timer);
+  }, [counter]);
+
       return (
           <div id="game">
               <h1>Hey {props.playerName}, we're playing!</h1>
               <Map/>
               <StreetView/>
+              <p>Time: {counter} seconds</p> {/* Display timer */}
               <p>
                   <button onClick={submitGuess}>Guess now</button>
               </p>
           </div>
       );
-  }
+  };
 
-  function resetPage() {
+  const resetPage = () => {
       setResult({});
       setPlayerName("");
-  }
+  };
 
-  function resetGame() {
+  const resetGame = () => {
       setResult({});
-  }
+  };
 
-  function Result() {
+  const Result = () => {
       return (
           <>
               <h1>{result.result}</h1>
@@ -163,15 +169,15 @@ const LandingPage = () => {
               </p>
           </>
       );
-  }
+  };
 
   return (
       <div id="container">
-          <TitleBar />
           {playerName === "" && <Welcome />}
           {playerName !== "" && !result.result && <Game playerName={playerName} />}
           {result.result && <Result />}
       </div>
   );
-}
+};
+
 export default App;
