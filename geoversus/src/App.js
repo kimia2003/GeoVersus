@@ -6,7 +6,7 @@ import "./App.css";
 const libraries = ['places'];
 
 const mapContainerStyle = {
-  width: '100px',
+  width: '200px',
   height: '100px',
 };
 
