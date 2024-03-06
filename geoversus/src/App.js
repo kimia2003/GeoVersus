@@ -60,8 +60,8 @@ const LandingPage = () => {
 
   const TitleBar = () => {
       return (
-          <div className="titleBar">
-              <p className="titleText">GeoVersus</p>
+          <div className="title-bar">
+              <p className="title-text">GeoVersus</p>
           </div>
       );
   }
