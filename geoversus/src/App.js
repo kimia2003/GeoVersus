@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleMap, useLoadScript, Marker, StreetViewPanorama } from '@react-google-maps/api';
+import welcomeImage from './images/geologo.png'; // Adjust the filename and extension accordingly
+
 import "./App.css";
 
 const libraries = ['places'];
@@ -101,6 +103,7 @@ const LandingPage = () => {
   const Welcome = () => {
       return (
           <div id="welcome">
+            <img src={welcomeImage} alt="Welcome" />
               <h1>Hi!</h1>
               <p>What's your name?</p>
               <form onSubmit={handlePlayerName}>
