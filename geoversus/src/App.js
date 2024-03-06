@@ -1,13 +1,13 @@
 import React from 'react';
 import { useState } from "react";
-import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, useLoadScript, Marker, StreetViewPanorama, LoadScript } from '@react-google-maps/api';
 import "./App.css";
 
 const libraries = ['places'];
 
 const mapContainerStyle = {
-  width: '100px',
-  height: '100px',
+    width: "600px",
+    height: "300px"
 };
 
 const center = {
@@ -52,6 +52,42 @@ const Map = () => {
     );
 };
 
+
+const StreetView = (props) => {
+    const { isLoaded, loadError } = useLoadScript({
+        googleMapsApiKey: 'AIzaSyCmmj1NWAU0BLH20V7w19PM2WwlWXSUIIE',
+        libraries,
+    });
+  
+    if (loadError) {
+        return <div>Error loading maps</div>;
+    }
+  
+    if (!isLoaded) {
+        return <div>Loading maps</div>;
+    }
+  
+    return (
+        <div>
+            <GoogleMap mapContainerStyle={mapContainerStyle} zoom={10} center={center}
+                options={{streetViewControl: false}}>
+                <StreetViewPanorama
+                    visible={true}
+                    mapContainerStyle={mapContainerStyle}
+                    position={center}
+                    options={{
+                        addressControl: false, 
+                        streetViewControl: false, 
+                        linksControl: false,
+                        panControl: false,
+                        enableCloseButton: false
+                    }}
+                />
+            </GoogleMap>
+        </div>
+      );
+};
+
 const LandingPage = () => {
 
   const [playerName, setPlayerName] = useState("");
@@ -60,8 +96,8 @@ const LandingPage = () => {
 
   const TitleBar = () => {
       return (
-          <div className="titleBar">
-              <p className="titleText">GeoVersus</p>
+          <div className="title-bar">
+              <p className="title-text">GeoVersus</p>
           </div>
       );
   }
@@ -100,6 +136,7 @@ const LandingPage = () => {
           <div id="game">
               <h1>Hey {props.playerName}, we're playing!</h1>
               <Map/>
+              <StreetView/>
               <p>
                   <button onClick={submitGuess}>Guess now</button>
               </p>
