@@ -18,9 +18,13 @@ const center = {
 
 const locations = [
     { name: "Seattle", lat: 47.60938630682191, lng: -122.33872169447726},
-    { name: "Los Angeles", lat: 34.0522, lng: -118.2437 },
-    { name: "London", lat: 51.5074, lng: -0.1278 },
-    { name: "Tokyo", lat: 35.6895, lng: 139.6917 }
+    { name: "West Hollywood", lat: 34.083650233963176, lng: -118.35512724948612 },
+    { name: "London", lat: 51.50111174643269, lng: -0.10577136162671487 },
+    { name: "Tokyo", lat: 35.66573721793416, lng: 139.77424247743855 },
+    { name: "Dubai", lat: 25.195820211175878, lng: 55.277369469791786 },
+    { name: "Jeddah", lat: 21.523915556881203, lng: 39.16336895178029 },
+    { name: "Abuja", lat: 9.068533774008563, lng: 7.470567032942697 },
+    { name: "Lisbon", lat: 38.695902577548395, lng: -9.207421686647791 },
     // add more locations later
 ];
 
