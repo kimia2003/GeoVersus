@@ -12,9 +12,17 @@ const mapContainerStyle = {
 };
 
 const center = {
-  lat: 7.2905715, // default latitude
-  lng: 80.6337262, // default longitude
+  lat: 7.8731, // Sri Lanka latitude
+  lng: 80.7718, // Sri Lanka longitude
 };
+
+const locations = [
+    { name: "Seattle", lat: 47.60938630682191, lng: -122.33872169447726},
+    { name: "Los Angeles", lat: 34.0522, lng: -118.2437 },
+    { name: "London", lat: 51.5074, lng: -0.1278 },
+    { name: "Tokyo", lat: 35.6895, lng: 139.6917 }
+    // add more locations later
+];
 
 const App = () => {
     return (
@@ -26,9 +34,9 @@ const App = () => {
     );
 };
 
-const Map = () => {
+const Map = ({ position }) => {
     const { isLoaded, loadError } = useLoadScript({
-      googleMapsApiKey: 'AIzaSyCmmj1NWAU0BLH20V7w19PM2WwlWXSUIIE',
+      googleMapsApiKey: 'AIzaSyCmmj1NWAU0BLH20V7w19PM2WwlWXSUIIE', 
       libraries,
     });
 
@@ -45,18 +53,18 @@ const Map = () => {
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
           zoom={10}
-          center={center}
+          center={position}
         >
-        <Marker position={center} />
+        <Marker position={position} />
         </GoogleMap>
       </div>
     );
 };
 
 
-const StreetView = (props) => {
+const StreetView = ({ position }) => {
     const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: 'AIzaSyCmmj1NWAU0BLH20V7w19PM2WwlWXSUIIE',
+        googleMapsApiKey: 'AIzaSyCmmj1NWAU0BLH20V7w19PM2WwlWXSUIIE', 
         libraries,
     });
   
@@ -70,12 +78,12 @@ const StreetView = (props) => {
   
     return (
         <div>
-            <GoogleMap mapContainerStyle={mapContainerStyle} zoom={10} center={center}
+            <GoogleMap mapContainerStyle={mapContainerStyle} zoom={10} center={position}
                 options={{streetViewControl: false}}>
                 <StreetViewPanorama
                     visible={true}
                     mapContainerStyle={mapContainerStyle}
-                    position={center}
+                    position={position}
                     options={{
                         addressControl: false, 
                         streetViewControl: false, 
@@ -124,27 +132,40 @@ const LandingPage = () => {
       });
   };
 
-  const Game = (props) => {
+  const Game = () => {
     const [counter, setCounter] = React.useState(60);
+    const [randomLocation, setRandomLocation] = useState(null); 
 
     React.useEffect(() => {
-    const timer =
-      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+      if(playerName && !result.result) {
+        const randomIndex = Math.floor(Math.random() * locations.length);
+        const randomLocation = locations[randomIndex];
+        setRandomLocation(randomLocation);
+      }
+    }, [playerName, result]);
+
+    React.useEffect(() => {
+      const timer =
+        counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
       if (counter === 0) {
         setResult({
           guess: "",
           result: "TIME'S UP! YOU DIDN'T GUESS IN TIME."
         });
-        clearInterval(timer); // Stop the timer
+        clearInterval(timer); // stop the timer
       }
-    return () => clearInterval(timer);
-  }, [counter]);
+      return () => clearInterval(timer);
+    }, [counter]);
 
       return (
           <div id="game">
-              <h1>Hey {props.playerName}, we're playing!</h1>
-              <Map/>
-              <StreetView/>
+              <h1>Hey {playerName}, we're playing!</h1>
+              {randomLocation && (
+                <>
+                   <Map position={center}/>
+                  <StreetView position={{lat: randomLocation.lat, lng: randomLocation.lng}}/>
+                </>
+              )}
               <p>Time: {counter} seconds</p> {/* Display timer */}
               <p>
                   <button onClick={submitGuess}>Guess now</button>
@@ -177,7 +198,7 @@ const LandingPage = () => {
   return (
       <div id="container">
           {playerName === "" && <Welcome />}
-          {playerName !== "" && !result.result && <Game playerName={playerName} />}
+          {playerName !== "" && !result.result && <Game />}
           {result.result && <Result />}
       </div>
   );
