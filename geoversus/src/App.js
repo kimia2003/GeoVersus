@@ -36,7 +36,7 @@ const App = () => {
 
 const Map = ({ position }) => {
     const { isLoaded, loadError } = useLoadScript({
-      googleMapsApiKey: 'AIzaSyCmmj1NWAU0BLH20V7w19PM2WwlWXSUIIE', // Replace with your API key
+      googleMapsApiKey: 'AIzaSyCmmj1NWAU0BLH20V7w19PM2WwlWXSUIIE', 
       libraries,
     });
 
@@ -64,7 +64,7 @@ const Map = ({ position }) => {
 
 const StreetView = ({ position }) => {
     const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: 'AIzaSyCmmj1NWAU0BLH20V7w19PM2WwlWXSUIIE', // Replace with your API key
+        googleMapsApiKey: 'AIzaSyCmmj1NWAU0BLH20V7w19PM2WwlWXSUIIE', 
         libraries,
     });
   
@@ -134,7 +134,7 @@ const LandingPage = () => {
 
   const Game = () => {
     const [counter, setCounter] = React.useState(60);
-    const [randomLocation, setRandomLocation] = useState(null); // Move state here
+    const [randomLocation, setRandomLocation] = useState(null); 
 
     React.useEffect(() => {
       if(playerName && !result.result) {
