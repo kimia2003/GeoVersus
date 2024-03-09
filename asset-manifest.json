@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/GeoVersus/static/css/main.108a2e00.css",
+    "main.js": "/GeoVersus/static/js/main.facab24d.js",
+    "static/media/geologo.png": "/GeoVersus/static/media/geologo.417f48e685bc04d68ed2.png",
+    "index.html": "/GeoVersus/index.html",
+    "main.108a2e00.css.map": "/GeoVersus/static/css/main.108a2e00.css.map",
+    "main.facab24d.js.map": "/GeoVersus/static/js/main.facab24d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.108a2e00.css",
+    "static/js/main.facab24d.js"
+  ]
+}
